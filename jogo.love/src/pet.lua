@@ -22,4 +22,6 @@ function Pet:isdead()
     end
 end
 
+function Pet:toFeed() end
+
 return Pet

@@ -30,8 +30,8 @@ function  love.load()
     table.insert(buttons, newButton(
     	"Start Game",
     	function()
-			print("Starting Game")
-			drawPet()
+		print("Starting Game")
+
     	end))
     table.insert(buttons, newButton(
     	"Load Game",

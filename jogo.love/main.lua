@@ -1,15 +1,22 @@
+
 local imageFile
-local frames = {}
 local currentFrame = 1
+local suit = require 'suit'
 local Player = require("src/player")
 local Pet = require("src/pet")
-local loveframes = require("loveframes")
+local p1 = Pet("gayarados")
+-- criação de botão
 
+
+
+
+-- configuração pra animação
 local fps = 5
 local frame = 1
 local anim_timer = 1 / fps
 local num_frames = 4
 local xoffset
+local frames = {}
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -33,14 +40,21 @@ function love.update(dt)
         xoffset = 124 * frame
         eve_sprite:setViewport(xoffset, 160, 124, 80)
     end
-    
+
+    if suit.Button("Alimentar", 50, 50, 80, 80).hit then
+        p1:toFeed()
+    end
+    if suit.Button("Brincar", 150, 50, 80, 80).hit then
+        p1:toPlay()
+    end
+
 end
 
 function love.draw()
     love.graphics.setBackgroundColor(154, 245, 237, 0.5)
     love.graphics.draw(imageFile, eve_sprite, 25, 200, 0, 5, 5)
-
-    loveframes.draw()
-
+    suit.draw()
+    suit.Label(p1.hunger, {align="left"}, 100, 150, 200, 30)   
+    suit.Label(p1.energy, {align="left"}, 200, 150, 200, 30)
 end
 

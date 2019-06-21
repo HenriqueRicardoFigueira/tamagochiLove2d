@@ -6,6 +6,7 @@ function Pet:new(name)
     self.health = 100
     self.hunger = 100
     self.happy = 100
+    self.energy = 100
     self.sleeping = false
     self.tired = false
     self.dirty = false
@@ -22,6 +23,17 @@ function Pet:isdead()
     end
 end
 
-function Pet:toFeed() end
+function Pet:toFeed()
+    if self.hunger > 0 then
+        self.hunger = self.hunger - 10
+    end
+end
+
+function Pet:toPlay()
+    if self.energy > 10 then
+        self.energy = self.energy - 10
+        self.happy = self.happy + 10
+    end
+end
 
 return Pet

@@ -1,6 +1,7 @@
 local imageFile
 local Spr = require("src/sprite")
 local Anim = require("src/animation")
+local Evt = require("src/events")
 local suit = require 'suit'
 local Player = require("src/player")
 local Pet = require("src/pet")
@@ -10,35 +11,39 @@ local p1 = Pet("gayarados")
 local slider = {value = 1, max = 2}
 
 -- configuração pra animação
-local a = Anim(16, 160, 124, 80, 6, 6, 1)
+--        Anim(xoffset, yoffset, w, h, collumn_size, num_frames, fps)   
+local charp = Anim(120, 0, 120, 80, 5, 5, 3)
+local charv = Anim(0, 160, 120, 80, 5, 5, 3)
+local charc = Anim(0, 240, 120, 80, 5, 5, 3)
 local ss  
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
-    imageFile = love.graphics.newImage("graphics/char.png")
-    ss = Spr(imageFile, 160, 124, 300, 300)
-    ss:add_animation("charizard", a)
+    image_char = love.graphics.newImage("graphics/char.png")
+    ss = Spr(image_char, 160, 124, 400, 400, 3, 3)
+    ss:add_animation("charizard", charp)
+    ss:add_animation("charizardV", charv)
+    ss:add_animation("charizardC", charc)
     ss:animate("charizard")
 end
 
 function love.update(dt)
     if dt > 0.035 then return end
 
-    --a:update(dt, sprite)
     ss:update(dt)
 
     if suit.Button("Alimentar", 50, 50, 80, 80).hit then
         p1:toFeed()
+        ss:animate("charizardC")
     end
 
     if suit.Button("Brincar", 150, 50, 80, 80).hit then
         p1:toPlay()
+        ss:animate("charizardV")
     end
 end
 
 function love.draw()
-    --love.graphics.setBackgroundColor(154, 245, 237, 0.5)
-    --love.graphics.draw(imageFile, sprite, 25, 200, 0, 5, 5)
     suit.draw()
     suit.Label(p1.hunger, {align="left"}, 100, 150, 200, 30)   
     suit.Label(p1.happy, {align="left"}, 200, 150, 200, 30)

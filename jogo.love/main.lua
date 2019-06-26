@@ -12,42 +12,49 @@ local slider = {value = 1, max = 2}
 
 -- configuração pra animação
 --        Anim(xoffset, yoffset, w, h, collumn_size, num_frames, fps)   
-local charp = Anim(120, 0, 120, 80, 5, 5, 3)
-local charv = Anim(0, 160, 120, 80, 5, 5, 3)
-local charc = Anim(0, 240, 120, 80, 5, 5, 3)
+local charp = Anim(130, 0, 134, 84, 6, 6, 3)
+local charv = Anim(123, 95, 134, 84, 6, 6, 3)
+local charc = Anim(108, 240, 108, 87, 7, 7, 3)
 local ss  
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
-    image_char = love.graphics.newImage("graphics/char.png")
-    ss = Spr(image_char, 160, 124, 400, 400, 3, 3)
-    ss:add_animation("charizard", charp)
-    ss:add_animation("charizardV", charv)
-    ss:add_animation("charizardC", charc)
-    ss:animate("charizard")
+    image_charV = love.graphics.newImage("graphics/charNv.png")
+    background = love.graphics.newArrayImage("graphics/bg.png")
+    --      (spriteX, w, h, x, y, sx, sy)
+    ssV = Spr(image_charV, 134, 84, 400, 400, 3, 3)
+    ssV:add_animation("charizardV", charv)
+    --ssV:add_animation("charizardC", charc)
+    ssV:add_animation("char", charp)
+    ssV:animate("char")
+   
 end
 
 function love.update(dt)
     if dt > 0.035 then return end
 
-    ss:update(dt)
-
+    ssV:update(dt)
+    
+    
     if suit.Button("Alimentar", 50, 50, 80, 80).hit then
         p1:toFeed()
-        ss:animate("charizardC")
+        --ssV:animate("charizardC")
     end
-
+    
     if suit.Button("Brincar", 150, 50, 80, 80).hit then
         p1:toPlay()
-        ss:animate("charizardV")
+        ssV:animate("charizardV")
     end
+
 end
 
 function love.draw()
+    love.graphics.draw(background)
     suit.draw()
-    suit.Label(p1.hunger, {align="left"}, 100, 150, 200, 30)   
+    ssV:draw()
+    suit.Label(p1.hunger, {align="left"}, 0, 150, 200, 30)   
     suit.Label(p1.happy, {align="left"}, 200, 150, 200, 30)
     suit.Label(p1.energy, {align="left"}, 250, 150, 200, 30)
-    ss:draw()
+    
 end
 

@@ -1,0 +1,17 @@
+function love.conf(t)
+
+    t.window.title = "Tamagon"         -- The window title (string)
+    t.window.icon = nil                 -- Filepath to an image to use as the window's icon (string)
+    t.window.width = 800                -- The window width (number)
+    t.window.height = 600            -- O número de buffer FSAA (número)
+    t.modules.joystick = false   -- Habilita o módulo joystick (boleano)
+    t.modules.audio = true      -- Habilita o módulo audio (boleano)
+    t.modules.keyboard = true   -- Habilita o módulo keyboard (boleano)
+    t.modules.event = true      -- Habilita o módulo event (boleano)
+    t.modules.image = true      -- Habilita o módulo image (boleano)
+    t.modules.graphics = true   -- Habilita o módulo graphics (boleano)
+    t.modules.timer = true      -- Habilita o módulo timer (boleano)
+    t.modules.mouse = true      -- Habilita o módulo mouse (boleano)
+    t.modules.sound = true      -- Habilita o módulo sound (boleano)
+    t.modules.physics = false   -- Habilita o módulo physics (boleano)
+end

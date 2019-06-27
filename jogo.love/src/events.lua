@@ -16,44 +16,44 @@ local function index_of(evt_tbl, callback)
     return -1
 end
 
-function Events:add(type)
-    assert(self.handlers[type] == nill, "Event already exists")
-    self.handlers[type] = {}
+function Events:add(evt_type)
+    assert(self.handlers[evt_type] == nill, "Event already exists")
+    self.handlers[evt_type] = {}
 end
 
-function Events:remove(type)
-    self.handlers[type] = nil
+function Events:remove(evt_type)
+    self.handlers[evt_type] = nil
 end
 
-function Events:hook(type, callback)
+function Events:hook(evt_type, callback)
     
     assert(type(callback) == "function", "callback parameter must be a function")
 
     if self.event_must_exist then
-        assert(self.handlers[type] ~= nill, "Event of type does not exists")
+        assert(self.handlers[evt_type] ~= nill, "Event of type does not exists")
     
-    elseif(self.handlers[type] == nil) then
+    elseif(self.handlers[evt_type] == nil) then
         self:add(type)
     end
     
-    assert(index_of(self.handlers[type], callback) == -1, "callback has already been register")
+    assert(index_of(self.handlers[evt_type], callback) == -1, "callback has already been register")
 
-    local tbl = self.handlers[type]
+    local tbl = self.handlers[evt_type]
     tbl[#tbl + 1] = callback
 end
 
-function Events:unhook(type, callback)
+function Events:unhook(evt_type, callback)
     assert(type(callback) == "function", "callback parameter must be a function")
-    if self.handlers[type] == nil then return end
-    local index = index_of(self.handlers[type], callback)
+    if self.handlers[evt_type] == nil then return end
+    local index = index_of(self.handlers[evt_type], callback)
     if index > -1 then
-        table.remove(self.handlers[type], index)
+        table.remove(self.handlers[evt_type], index)
     end
 end
 
-function Events:invoke(type, ...)
-    assert(self.handlers[type] ~= nill, "Event of type does not exists")  
-    local tbl = self.handlers[type] 
+function Events:invoke(evt_type, ...)
+    assert(self.handlers[evt_type] ~= nill, "Event of type does not exists")  
+    local tbl = self.handlers[evt_type] 
     for i = 1, #tbl do
         tbl[i](...)
     end

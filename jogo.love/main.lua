@@ -3,6 +3,7 @@ local g = require("src/game")
 local s = require("suit")
 local gameStatus = "menu"
 local menu = require("src/menu")
+ x = s.new()
 
 function love.load()
     game = g()
@@ -13,7 +14,8 @@ end
 function love.update(dt)
     game:update(dt)
     
-    gameStatus = menu:checkGoing()
+    --x:Label("xxxxxxx", 1, 1, 50, 50)
+   gameStatus = menu:checkGoing()
     if gameStatus == "start" then
         gameStatus = "game"
     end
@@ -25,7 +27,7 @@ function love.draw()
     love.graphics.draw(background);
     --love.graphics.setBackgroundColor(255, 0, 0)
     --love.graphics.print(gameStatus, 400, 80)
-    
+    --x:draw()
     if gameStatus == "menu" then menu:draw() end
 
     if gameStatus == "game" then game:draw() end

@@ -14,7 +14,7 @@ local Game = class:derive("Game")
 -- configuração pra animação
 --        Anim(xoffset, yoffset, w, h, collumn_size, num_frames, fps)   
 local charp = Anim(130, 0, 134, 84, 6, 6, 3)
-local charv = Anim(123, 95, 134, 84, 6, 6, 3)
+local charv = Anim(123, 95, 134, 84, 2, 2, 8)
 local charc = Anim(108, 240, 108, 87, 7, 7, 3)
   
 
@@ -22,7 +22,6 @@ function Game:new()
     love.graphics.setDefaultFilter('nearest', 'nearest')
     -- imagens
     image_charV = love.graphics.newImage("graphics/charNv.png")
-    background = love.graphics.newImage("graphics/bg.png")
     bar1 = love.graphics.newImage("graphics/bar_1.png")
     bar2 = love.graphics.newImage("graphics/bar_2.png")
 
@@ -71,9 +70,6 @@ function Game:update(dt)
 end
 
 function Game:draw(...)
-    -- carrega backgroundo do jogo
-    love.graphics.draw(background)
-
     -- desenha barras de status
     bHunger1:draw()
     bHunger2:draw()
@@ -83,7 +79,7 @@ function Game:draw(...)
     bEnergy2:draw()
 
     -- desenha os botões
-    suit.draw()
+    suit:draw()
 
     -- desenha sprite
     ssV:draw()

@@ -14,7 +14,7 @@ local Game = class:derive("Game")
 -- configuração pra animação
 --        Anim(xoffset, yoffset, w, h, collumn_size, num_frames, fps)   
 local charp = Anim(130, 0, 134, 84, 6, 6, 3)
-local charv = Anim(123, 95, 134, 84, 2, 2, 8)
+local charv = Anim(123, 95, 134, 84, 6, 6, 4)
 local charc = Anim(108, 240, 108, 87, 7, 7, 3)
   
 

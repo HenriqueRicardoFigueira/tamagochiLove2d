@@ -35,35 +35,25 @@ function setOther(cond)
 end
 
 function love.load()
-    game = g()
+    
+    
     --menu:load()
     background = love.graphics.newImage("graphics/bg.png")
 end
 
---function love.update(dt)
---    game:update(dt)
-    
-    --x:Label("xxxxxxx", 1, 1, 50, 50)
---   gameStatus = menu:checkGoing()
---    if gameStatus == "start" then
---        gameStatus = "game"
---    end
-
-
---end
-
 function love.update(dt)
-    -- Put a button on the screen. If hit, show a message.
-    if suit.Button("Start Game", 100,100, 300,30).hit then 
-        setOther(1) 
-        Menu = false
-        print(Start)        
+   -- Put a button on the screen. If hit, show a message.
+    if Menu == true then
+        if suit.Button("Start Game", 100,100, 300,30).hit then setOther(1) 
+            game = g()
+            game:update(dt)
+        end
+        if suit.Button("Load", 100,140, 300,30).hit then setOther(2) end
+        if suit.Button("Settings", 100,180, 300,30).hit then setOther(3) end
+        if suit.Button("Quit", 100,220, 300,30).hit then setOther(4) end
+    else
+        game:update(dt)
     end
-    
-    
-    if suit.Button("Load", 100,140, 300,30).hit then setOther(2) end
-    if suit.Button("Settings", 100,180, 300,30).hit then setOther(3) end
-    if suit.Button("Quit", 100,220, 300,30).hit then setOther(4) end
 
 end
 
@@ -77,7 +67,9 @@ function love.draw()
     elseif Quit == true then
         love.event.quit(0)
     elseif Start == true then
-        game:draw()
+        love.gaming()
+        
+        
     end
 
     

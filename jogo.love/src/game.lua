@@ -15,13 +15,13 @@ local Game = class:derive("Game")
 --        Anim(xoffset, yoffset, w, h, collumn_size, num_frames, fps)   
 local charp = Anim(130, 0, 134, 84, 6, 6, 3)
 local charv = Anim(123, 95, 134, 84, 6, 6, 4)
-local charc = Anim(108, 240, 108, 87, 7, 7, 3)
+local charc = Anim(123, 190, 134, 87, 6, 6, 3)
   
 
 function Game:new()
     love.graphics.setDefaultFilter('nearest', 'nearest')
     -- imagens
-    image_charV = love.graphics.newImage("graphics/charNv.png")
+    image_charV = love.graphics.newImage("graphics/versaomelhor.png")
     bar1 = love.graphics.newImage("graphics/bar_1.png")
     bar2 = love.graphics.newImage("graphics/bar_2.png")
 
@@ -38,7 +38,7 @@ function Game:new()
     ssV = Spr(image_charV, 134, 84, 400, 400, 3, 3)
 
     -- animações
-    -- ssV:add_animation("charizardC", charc)
+    ssV:add_animation("charizardC", charc)
     ssV:add_animation("char", charp)
     ssV:add_animation("charizardV", charv)
     ssV:animate("char")
@@ -48,6 +48,7 @@ function Game:new()
 end
 
 function Game:update(dt)
+    p1:degree()
     if dt > 0.035 then return end
 
     -- update sprite
@@ -58,7 +59,7 @@ function Game:update(dt)
         p1:toFeed()
         bHunger2:upScale((p1.hunger / 1000))
         bEnergy2:upScale((p1.energy / 1000))
-        -- ssV:animate("charizardC")
+        ssV:animate("charizardC")
     end
 
     if suit.Button("Brincar", 150, 50, 80, 80).hit then
@@ -71,6 +72,8 @@ end
 
 function Game:draw(...)
     -- desenha barras de status
+--    p1.degree()
+
     bHunger1:draw()
     bHunger2:draw()
     bHappy1:draw()

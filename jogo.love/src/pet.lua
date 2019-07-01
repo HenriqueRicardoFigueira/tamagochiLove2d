@@ -5,7 +5,7 @@ function Pet:new(name)
     self.name = name
     self.health = 100
     self.hunger = 100
-    self.happy = 0
+    self.happy = 50
     self.energy = 100
     self.state = {
         sleeping = false,
@@ -40,6 +40,23 @@ end
 function Pet:tired()
     if self.energy < 30 then
         self.state.tired = true
+    end
+end
+
+function Pet:degree()
+    if self.health == nil then
+        self.health = 100
+        self.hunger = 100
+        self.happy = 100
+        self.energy = 100
+    else
+        if self.health  > 0 then self.health = self.health + 0.0001 end
+        if self.health  > 0 then self.hunger = self.hunger + 0.001 end
+        if self.happy  > 0 then self.happy = self.happy + 0.001 end
+        if self.energy  > 0 then self.energy = self.energy + 0.001 end
+        print("envelheceu")
+        print(self.health)
+        print(self.happy)
     end
 end
 

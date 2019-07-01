@@ -53,6 +53,8 @@ function love.update(dt)
         if suit.Button("Quit", 100,220, 300,30).hit then setOther(4) end
     else
         game:update(dt)
+       
+
     end
 
 end

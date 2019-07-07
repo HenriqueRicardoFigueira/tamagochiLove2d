@@ -2,8 +2,6 @@
 local g = require("src/game")
 local s = require("suit")
 local gameStatus = "menu"
---local miniGame = require("src/freeMain")
---local menu = require("src/menu")
  x = s.new()
 local suit = require ('suit')
 Start = false --cond1
@@ -14,12 +12,9 @@ miniG = false -- cond5
 cond = 0
 
 --minigame 
---require("minigame/chariz")
 
-local lose = false
-local nextLevel = 10
-local points = 0
-local balls = nil
+
+
 
 --end minigame
 function setOther(cond)
@@ -103,11 +98,6 @@ function love.draw()
 
     
 end
-
---function love.loadminigame()
- --   love.window.setTitle("Queda Livre do Charizard")
- --   balls = newBalls(3, 30)
-  --  balls:initAllBalls()
 
 function love.gaming()
     game:draw()

@@ -11,12 +11,6 @@ Menu = true --cond4
 miniG = false -- cond5
 cond = 0
 
---minigame 
-
-
-
-
---end minigame
 function setOther(cond)
     if cond == 1 then
         Start = true -- TRUE
@@ -48,7 +42,7 @@ function setOther(cond)
         Settings = false --cond3
         Menu = false --cond4
         miniG = true -- true
-        
+        miniGame:new()
     end
 end
 
@@ -69,16 +63,13 @@ function love.update(dt)
         if suit.Button("Load", 100,140, 300,30).hit then setOther(2) end
         if suit.Button("Settings", 100,180, 300,30).hit then setOther(3) end
         if suit.Button("Quit", 100,220, 300,30).hit then setOther(4) end
-    elseif miniG == true then
-       print("minigame nao conectado")
-        
+
     else
         game:update(dt)
-       
-
     end
 
 end
+
 
 function love.draw()
     if Menu == true then
@@ -92,8 +83,8 @@ function love.draw()
     elseif Start == true then
         love.gaming()
     elseif miniG == true then
-       -- miniGame.draw()    
-       print("minigame nao conectado")
+        miniGame:draw()   
+       --print("minigame nao conectado")
     end
 
     

@@ -8,19 +8,22 @@ local Pet = require("src/pet")
 local p1 = Pet("gayarados")
 local ui_bar = require("src/bars")
 local class = require("src/class")
-
+local minigaming = require("MG/minigame")
 local Game = class:derive("Game")
 
 -- configuração pra animação
 --        Anim(xoffset, yoffset, w, h, collumn_size, num_frames, fps)   
 local charp = Anim(130, 0, 134, 84, 6, 6, 3)
 local charv = Anim(123, 95, 134, 84, 6, 6, 4)
-local charc = Anim(123, 190, 134, 87, 6, 6, 3)
-  
-
+local charc = Anim(123, 190, 134, 87, 6, 6, 4)
+local Gaming = false 
+minigaming.new()
 function Game:new()
-    love.graphics.setDefaultFilter('nearest', 'nearest')
-    -- imagens
+    --minigami 
+    
+ 
+    love.graphics.setDefaultFilter('nearest', 'nearest') 
+    -- imagens 
     image_charV = love.graphics.newImage("graphics/versaomelhor.png")
     bar1 = love.graphics.newImage("graphics/bar_1.png")
     bar2 = love.graphics.newImage("graphics/bar_2.png")
@@ -45,6 +48,7 @@ function Game:new()
 
     -- fonts
     font = love.graphics.newFont("fonts/fonteNova.otf", 20)
+    
 end
 
 function Game:update(dt)
@@ -67,30 +71,39 @@ function Game:update(dt)
         bHappy2:upScale((p1.happy / 1000))
         bEnergy2:upScale((p1.energy / 1000))
         ssV:animate("charizardV")
+        Gaming = true
     end
 end
 
 function Game:draw(...)
     -- desenha barras de status
 --    p1.degree()
+    if Gaming == false then
+        bHunger1:draw()
+        bHunger2:draw()
+        bHappy1:draw()
+        bHappy2:draw()
+        bEnergy1:draw()
+        bEnergy2:draw()
 
-    bHunger1:draw()
-    bHunger2:draw()
-    bHappy1:draw()
-    bHappy2:draw()
-    bEnergy1:draw()
-    bEnergy2:draw()
+        -- desenha os botões
+        suit:draw()
 
-    -- desenha os botões
-    suit:draw()
+        -- desenha sprite
+        ssV:draw()
 
-    -- desenha sprite
-    ssV:draw()
-
-    -- nomes dos status
-    love.graphics.print("FOME", 450, 45)
-    love.graphics.print("FELICIDADE", 450, 75)
-    love.graphics.print("ENERGIA", 450, 15)
+        -- nomes dos status
+        love.graphics.print("FOME", 450, 45)
+        love.graphics.print("FELICIDADE", 450, 75)
+        love.graphics.print("ENERGIA", 450, 15)
+    else
+        
+        minigaming.update()
+        minigaming.draw()
+        print("a")
+        
+        
+    end
 end
 
 return Game

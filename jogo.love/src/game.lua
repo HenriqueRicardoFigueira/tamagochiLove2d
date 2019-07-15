@@ -17,6 +17,7 @@ local charp = Anim(130, 0, 134, 84, 6, 6, 3)
 local charv = Anim(123, 95, 134, 84, 6, 6, 4)
 local charc = Anim(123, 190, 134, 87, 6, 6, 4)
 Gaming = false 
+local outgamin = false
 --minigaming.new()
 function Game:new()
     --minigami 
@@ -115,8 +116,12 @@ function Game:draw(...)
 --    p1.degree()
     if Gaming == true then
         Game:Mini()
+        outgamin = true
     else
-        background = love.graphics.newImage("graphics/bg.png")
+        if outgamin == true then 
+            background = love.graphics.newImage("graphics/bg.png")
+            outgamin = false
+        end
         Game:Normal()
     end
        

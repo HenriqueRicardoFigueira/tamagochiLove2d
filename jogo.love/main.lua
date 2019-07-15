@@ -36,6 +36,7 @@ function setOther(cond)
         Settings = false --cond3
         Menu = true --TRUE
         miniG = false -- cond5
+        backgroundo = love.graphics.newImage("MG/graphics/fundo.png")
     elseif cond == 5 then
         Start = false --cond1
         Load = false --cond2
@@ -51,6 +52,7 @@ function love.load()
     
     --menu:load()
     background = love.graphics.newImage("graphics/bg.png")
+    backgroundo = love.graphics.newImage("MG/graphics/fundo.png")
 end
 
 function love.update(dt)
@@ -73,6 +75,12 @@ end
 
 function love.draw()
     if Menu == true then
+        for i = 0, love.graphics.getWidth() / backgroundo:getWidth() do
+            for j = 0, love.graphics.getHeight() / backgroundo:getHeight() do
+                love.graphics.draw(backgroundo, i * backgroundo:getWidth(), j * backgroundo:getHeight())
+                --love.graphics.draw(background,100, 100, math.rad(0), 1, 1, width / 2, height / 2)
+            end
+          end
         suit.draw()
     elseif Load == true then
         game:draw()

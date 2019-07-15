@@ -9,13 +9,14 @@ local chzrd = nil
 local class = require("src/class")
 local Minigame = class:derive("Minigame")
 
+
 function Minigame:new()
   --red = 100/255
   --green = 252/255
   --blue = 180/255
   --alpha = 80/100
-  --background = love.graphics.newImage("MG/graphics/fundo.png")
-  --love.graphics.draw(background)
+  background = love.graphics.newImage("MG/graphics/fundo.png")
+  love.graphics.draw(background)
   --love.graphics.setBackgroundColor( red, green, blue, alpha)
   love.window.setTitle("Queda Livre do Charizard")
   

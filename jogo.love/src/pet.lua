@@ -50,10 +50,10 @@ function Pet:degree()
         self.happy = 100
         self.energy = 100
     else
-        if self.health  > 0 then self.health = self.health + 0.0001 end
-        if self.health  > 0 then self.hunger = self.hunger + 0.001 end
+        if self.health  > 0 then self.health = self.health + 0.001 end
+        if self.health  > 0 then self.hunger = self.hunger + 0.01 end
         if self.happy  > 0 then self.happy = self.happy + 0.001 end
-        if self.energy  > 0 then self.energy = self.energy + 0.001 end
+        if self.energy  > 0 then self.energy = self.energy - 0.01 end
         print("envelheceu")
         print(self.health)
         print(self.happy)

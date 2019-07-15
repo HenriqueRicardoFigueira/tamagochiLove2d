@@ -20,7 +20,7 @@ local Gaming = false
 minigaming.new()
 function Game:new()
     --minigami 
-    
+    minigaming.new()
  
     love.graphics.setDefaultFilter('nearest', 'nearest') 
     -- imagens 
@@ -72,6 +72,7 @@ function Game:update(dt)
         bEnergy2:upScale((p1.energy / 1000))
         ssV:animate("charizardV")
         Gaming = true
+
     end
 end
 
@@ -96,8 +97,9 @@ function Game:draw(...)
         love.graphics.print("FOME", 450, 45)
         love.graphics.print("FELICIDADE", 450, 75)
         love.graphics.print("ENERGIA", 450, 15)
-    else
         
+    else
+       
         minigaming.update()
         minigaming.draw()
         print("a")

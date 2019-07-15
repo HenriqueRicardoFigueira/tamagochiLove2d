@@ -16,11 +16,11 @@ local Game = class:derive("Game")
 local charp = Anim(130, 0, 134, 84, 6, 6, 3)
 local charv = Anim(123, 95, 134, 84, 6, 6, 4)
 local charc = Anim(123, 190, 134, 87, 6, 6, 4)
-local Gaming = false 
-minigaming.new()
+Gaming = false 
+--minigaming.new()
 function Game:new()
     --minigami 
-    minigaming.new()
+    
  
     love.graphics.setDefaultFilter('nearest', 'nearest') 
     -- imagens 
@@ -54,58 +54,68 @@ end
 function Game:update(dt)
     p1:degree()
     if dt > 0.035 then return end
-
+    if Gaming == false then
     -- update sprite
-    ssV:update(dt)
+        ssV:update(dt)
 
-    -- criação de botões e actions (CRIAR CLASSE PARA GERAR)
-    if suit.Button("Alimentar", 50, 50, 80, 80).hit then
-        p1:toFeed()
-        bHunger2:upScale((p1.hunger / 1000))
-        bEnergy2:upScale((p1.energy / 1000))
-        ssV:animate("charizardC")
+        -- criação de botões e actions (CRIAR CLASSE PARA GERAR)
+        if suit.Button("Alimentar", 50, 50, 80, 80).hit then
+            p1:toFeed()
+            bHunger2:upScale((p1.hunger / 1000))
+            bEnergy2:upScale((p1.energy / 1000))
+            ssV:animate("charizardC")
+        end
+
+        if suit.Button("Brincar", 150, 50, 80, 80).hit then
+            p1:toPlay()
+            bHappy2:upScale((p1.happy / 1000))
+            bEnergy2:upScale((p1.energy / 1000))
+            ssV:animate("charizardV")
+            Gaming = true
+            minigaming.new()
+
+        end
     end
 
-    if suit.Button("Brincar", 150, 50, 80, 80).hit then
-        p1:toPlay()
-        bHappy2:upScale((p1.happy / 1000))
-        bEnergy2:upScale((p1.energy / 1000))
-        ssV:animate("charizardV")
-        Gaming = true
+end
+function Game:Mini(...)
+    minigaming.update()
+    minigaming.draw()
+    p1:toPlay()
+end
 
-    end
+function Game:Normal(...)
+    bHunger1:draw()
+    bHunger2:draw()
+    bHappy1:draw()
+    bHappy2:draw()
+    bEnergy1:draw()
+    bEnergy2:draw()
+
+    -- desenha os botões
+    suit:draw()
+
+    -- desenha sprite
+    ssV:draw()
+
+    -- nomes dos status
+    love.graphics.print("FOME", 450, 45)
+    love.graphics.print("FELICIDADE", 450, 75)
+    love.graphics.print("ENERGIA", 450, 15)
 end
 
 function Game:draw(...)
     -- desenha barras de status
 --    p1.degree()
-    if Gaming == false then
-        bHunger1:draw()
-        bHunger2:draw()
-        bHappy1:draw()
-        bHappy2:draw()
-        bEnergy1:draw()
-        bEnergy2:draw()
-
-        -- desenha os botões
-        suit:draw()
-
-        -- desenha sprite
-        ssV:draw()
-
-        -- nomes dos status
-        love.graphics.print("FOME", 450, 45)
-        love.graphics.print("FELICIDADE", 450, 75)
-        love.graphics.print("ENERGIA", 450, 15)
-        
+    if Gaming == true then
+        Game:Mini()
     else
-       
-        minigaming.update()
-        minigaming.draw()
-        print("a")
-        
-        
+        Game:Normal()
     end
+       
+        
+        
+  
 end
 
 return Game

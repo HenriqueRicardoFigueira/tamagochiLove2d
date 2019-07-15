@@ -8,15 +8,18 @@ local points = 0
 local chzrd = nil
 local class = require("src/class")
 local Minigame = class:derive("Minigame")
-
+local suito = require ('suit')
 
 function Minigame:new()
   --red = 100/255
   --green = 252/255
   --blue = 180/255
   --alpha = 80/100
+  --suito.reinit()
   background = love.graphics.newImage("MG/graphics/fundo.png")
-  love.graphics.draw(background)
+  width = background:getWidth()
+  height = background:getHeight()
+
   --love.graphics.setBackgroundColor( red, green, blue, alpha)
   love.window.setTitle("Queda Livre do Charizard")
   
@@ -26,9 +29,17 @@ function Minigame:new()
 end
 
 function Minigame:update()
+ 
   x , y = love.mouse.getPosition( )
   Minigame:mousepressed(x, y, button, istouch)
   lose = chzrd:updateChzrd()
+
+  if suito.Button("Sair", 50,50, 100,30).hit then 
+    Gaming = false 
+    
+
+
+  end
 end
 
 function Minigame:mousepressed(x, y, button, istouch)
@@ -49,9 +60,11 @@ end
 
 function Minigame:draw()
   --Minigame:update()
+  
   for i = 0, love.graphics.getWidth() / background:getWidth() do
     for j = 0, love.graphics.getHeight() / background:getHeight() do
         love.graphics.draw(background, i * background:getWidth(), j * background:getHeight())
+        --love.graphics.draw(background,100, 100, math.rad(0), 1, 1, width / 2, height / 2)
     end
   end
   if (lose == false) then
@@ -60,7 +73,7 @@ function Minigame:draw()
     love.graphics.print("FIM DE JOGO", 350, 300)
   end
   
-  
+  suito.draw()
   love.graphics.print("PONTOS: " .. points, 700, 400)
 end
 return  Minigame

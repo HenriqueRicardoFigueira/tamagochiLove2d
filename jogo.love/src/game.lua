@@ -21,7 +21,7 @@ Gaming = false
 function Game:new()
     --minigami 
     
- 
+    background = love.graphics.newImage("graphics/bg.png")
     love.graphics.setDefaultFilter('nearest', 'nearest') 
     -- imagens 
     image_charV = love.graphics.newImage("graphics/versaomelhor.png")
@@ -85,6 +85,12 @@ function Game:Mini(...)
 end
 
 function Game:Normal(...)
+    
+    for i = 0, love.graphics.getWidth() / background:getWidth() do
+        for j = 0, love.graphics.getHeight() / background:getHeight() do
+            love.graphics.draw(background, i * background:getWidth(), j * background:getHeight())
+        end
+    end
     bHunger1:draw()
     bHunger2:draw()
     bHappy1:draw()
@@ -110,6 +116,7 @@ function Game:draw(...)
     if Gaming == true then
         Game:Mini()
     else
+        background = love.graphics.newImage("graphics/bg.png")
         Game:Normal()
     end
        

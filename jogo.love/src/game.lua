@@ -22,7 +22,8 @@ local outgamin = false
 -- minigaming.new()
 function Game:new()
     -- minigami 
-
+    --som
+    src4 = love.audio.newSource("sounds/ambient.wav", "static") 
     background = love.graphics.newImage("graphics/bg.png")
     love.graphics.setDefaultFilter('nearest', 'nearest')
     -- imagens 
@@ -72,6 +73,9 @@ function Game:update(dt)
     if Gaming == false then
         -- update sprite
         ssV:update(dt)
+        if sound == true then
+            src4:play()
+        end
         bHealth2:upScale((p1.health / 1000))
         bHunger2:upScale((p1.hunger / 1000))
         bEnergy2:upScale((p1.energy / 1000))
@@ -106,12 +110,16 @@ function Game:update(dt)
                 bEnergy2:upScale((p1.energy / 1000))
                 ssV:animate("charizardV")
                 Gaming = true
+                if sound == true then
+                    src4:stop()
+                end
                 minigaming.new()
             else
                 return
             end
         end
     end
+
 
 end
 function Game:Mini(...)

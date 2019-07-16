@@ -41,9 +41,13 @@ function Minigame:update()
   x , y = love.mouse.getPosition( )
   Minigame:mousepressed(x, y, button, istouch)
   lose = chzrd:updateChzrd()
-  src1:play()
+  if sound == true then
+    src1:play()
+  end
   if suito.Button("Sair", 50,50, 100,30).hit then 
-    src1:stop()
+    if sound == true then
+      src1:stop()
+    end
     Gaming = false 
     
 

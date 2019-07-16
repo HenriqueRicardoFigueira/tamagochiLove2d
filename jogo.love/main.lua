@@ -10,7 +10,7 @@ Settings = false --cond3
 Menu = true --cond4
 miniG = false -- cond5
 cond = 0
-
+sound = true
 function setOther(cond)
     if cond == 1 then
         Start = true -- TRUE
@@ -63,7 +63,20 @@ function love.update(dt)
             game:update(dt)
         end
         if suit.Button("Load", 100,140, 300,30).hit then setOther(2) end
-        if suit.Button("Settings", 100,180, 300,30).hit then setOther(3) end
+        if suit.Button("Sound", 100,180, 300,30).hit then 
+            --.checkStateChanged
+            if(sound == true) then
+                sound = false
+                --print("sound activated?")
+                print(sound)
+            else
+                sound = true
+                --print("sound activated?")
+                print(sound)
+
+            end 
+            --chk = {text = "Disable Sound?"}
+        end
         if suit.Button("Quit", 100,220, 300,30).hit then setOther(4) end
 
     else

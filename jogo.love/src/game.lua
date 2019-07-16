@@ -114,6 +114,9 @@ function Game:update(dt)
 
         if suit.Button("Brincar", 150, 50, 80, 80).hit then
             if p1.energy > 10 then
+                if sound == true then
+                    src4:stop()
+                end
                 p1:toPlay()
                 bHappy2:upScale((p1.happy / 1000))
                 bEnergy2:upScale((p1.energy / 1000))

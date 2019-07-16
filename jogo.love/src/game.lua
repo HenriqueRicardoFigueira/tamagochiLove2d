@@ -11,6 +11,7 @@ local class = require("src/class")
 local minigaming = require("MG/minigame")
 local Game = class:derive("Game")
 local data = {}
+local load = {}
 
 -- configuração pra animação
 --        Anim(xoffset, yoffset, w, h, collumn_size, num_frames, fps)   
@@ -24,6 +25,7 @@ function Game:new()
     -- minigami 
     --som
     src4 = love.audio.newSource("sounds/ambient.wav", "static") 
+
     background = love.graphics.newImage("graphics/bg.png")
     love.graphics.setDefaultFilter('nearest', 'nearest')
     -- imagens 
@@ -36,9 +38,15 @@ function Game:new()
         love.filesystem.write('save.lua', "")
     else
         p13 = love.filesystem.read('save.lua')
+        
         for i in string.gmatch(p13, "%S+") do
-            print(i)
+            table.insert(load,tostring(i))
          end
+
+         p1.name = load[1]
+         p1.happy = tonumber(load[2])
+         p1.energy = tonumber(load[3])
+         p1.health = tonumber(load[4])
     end
     print(love.filesystem.getSaveDirectory())
 
@@ -68,32 +76,33 @@ function Game:new()
 end
 
 function Game:update(dt)
+    if p1:isdead() then print("morreu") end
     p1:degree()
     if dt > 0.035 then return end
     if Gaming == false then
-        -- update sprite
-        ssV:update(dt)
         if sound == true then
             src4:play()
         end
+        -- update sprite
+        ssV:update(dt)
         bHealth2:upScale((p1.health / 1000))
         bHunger2:upScale((p1.hunger / 1000))
         bEnergy2:upScale((p1.energy / 1000))
         bHappy2:upScale((p1.happy / 1000))
 
         -- criação de botões e actions (CRIAR CLASSE PARA GERAR)
-
-        if suit.Button("Sair", 10, 10, 100, 30).hit then
+        --salvando estado
+        if suit.Button("Sair", 50, 10, 100, 30).hit then
             table.insert(data,tostring(p1.name))
             table.insert(data,tostring(p1.happy))
             table.insert(data,tostring(p1.energy))
             table.insert(data,tostring(p1.health))
 
             for i = 1 , #data do
-                print(data[i])
                 love.filesystem.append('save.lua', data[i])
                 love.filesystem.append('save.lua', "\n")
             end
+            love.event.quit(0)
         end
 
         if suit.Button("Alimentar", 50, 50, 80, 80).hit then
@@ -110,16 +119,12 @@ function Game:update(dt)
                 bEnergy2:upScale((p1.energy / 1000))
                 ssV:animate("charizardV")
                 Gaming = true
-                if sound == true then
-                    src4:stop()
-                end
                 minigaming.new()
             else
                 return
             end
         end
     end
-
 
 end
 function Game:Mini(...)

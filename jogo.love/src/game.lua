@@ -20,7 +20,8 @@ Gaming = false
 local outgamin = false
 --minigaming.new()
 function Game:new()
-    --minigami 
+    --som
+    src4 = love.audio.newSource("sounds/ambient.wav", "static") 
     
     background = love.graphics.newImage("graphics/bg.png")
     love.graphics.setDefaultFilter('nearest', 'nearest') 
@@ -53,12 +54,13 @@ function Game:new()
 end
 
 function Game:update(dt)
+   
     p1:degree()
     if dt > 0.035 then return end
     if Gaming == false then
     -- update sprite
         ssV:update(dt)
-
+        src4:play()
         -- criação de botões e actions (CRIAR CLASSE PARA GERAR)
         if suit.Button("Alimentar", 50, 50, 80, 80).hit then
             p1:toFeed()
@@ -76,6 +78,9 @@ function Game:update(dt)
             minigaming.new()
 
         end
+
+    else
+        src4:stop()
     end
 
 end
@@ -112,8 +117,7 @@ function Game:Normal(...)
 end
 
 function Game:draw(...)
-    -- desenha barras de status
---    p1.degree()
+
     if Gaming == true then
         Game:Mini()
         outgamin = true

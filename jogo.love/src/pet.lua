@@ -19,7 +19,6 @@ end
 
 function Pet:isdead() 
     if self.health < 1 then 
-        print("entrei")
         return true 
     end 
 end

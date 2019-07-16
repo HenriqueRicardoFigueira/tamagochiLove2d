@@ -12,24 +12,26 @@ local minigaming = require("MG/minigame")
 local Game = class:derive("Game")
 local data = {}
 local load = {}
+local dead = {"gayarados", tostring(0), tostring(100), tostring(100), tostring(0)}
 
 -- configuração pra animação
 --        Anim(xoffset, yoffset, w, h, collumn_size, num_frames, fps)   
 local charp = Anim(130, 0, 134, 84, 6, 6, 3)
 local charv = Anim(123, 95, 134, 84, 6, 6, 4)
 local charc = Anim(123, 190, 134, 87, 6, 6, 4)
+local charm = Anim(123, 290, 134, 87, 6, 6, 4)
 Gaming = false
 local outgamin = false
 -- minigaming.new()
 function Game:new()
     -- minigami 
-    --som
-    src4 = love.audio.newSource("sounds/ambient.wav", "static") 
+    -- som
+    src4 = love.audio.newSource("sounds/ambient.wav", "static")
 
     background = love.graphics.newImage("graphics/bg.png")
     love.graphics.setDefaultFilter('nearest', 'nearest')
     -- imagens 
-    image_charV = love.graphics.newImage("graphics/versaomelhor.png")
+    image_charV = love.graphics.newImage("graphics/emorreu.png")
     bar1 = love.graphics.newImage("graphics/bar_1.png")
     bar2 = love.graphics.newImage("graphics/bar_2.png")
     -- criando arquivo de save
@@ -38,15 +40,17 @@ function Game:new()
         love.filesystem.write('save.lua', "")
     else
         p13 = love.filesystem.read('save.lua')
-        
         for i in string.gmatch(p13, "%S+") do
-            table.insert(load,tostring(i))
-         end
+            table.insert(load, tostring(i))
+            print(i)
+        end
 
-         p1.name = load[1]
-         p1.happy = tonumber(load[2])
-         p1.energy = tonumber(load[3])
-         p1.health = tonumber(load[4])
+        p1.name = load[1]
+        p1.happy = tonumber(load[2])
+        p1.energy = tonumber(load[3])
+        p1.health = tonumber(load[4])
+        p1.hunger = tonumber(load[5])
+        love.filesystem.write('save.lua', " ")
     end
     print(love.filesystem.getSaveDirectory())
 
@@ -68,6 +72,7 @@ function Game:new()
     ssV:add_animation("charizardC", charc)
     ssV:add_animation("char", charp)
     ssV:add_animation("charizardV", charv)
+    ssV:add_animation("charizardM", charm)
     ssV:animate("char")
 
     -- fonts
@@ -76,13 +81,13 @@ function Game:new()
 end
 
 function Game:update(dt)
-    if p1:isdead() then print("morreu") end
+    -- morreu
+    if p1:isdead() then ssV:animate("charizardM") end
+    -- desce status
     p1:degree()
     if dt > 0.035 then return end
     if Gaming == false then
-        if sound == true then
-            src4:play()
-        end
+        if sound == true then src4:play() end
         -- update sprite
         ssV:update(dt)
         bHealth2:upScale((p1.health / 1000))
@@ -91,21 +96,30 @@ function Game:update(dt)
         bHappy2:upScale((p1.happy / 1000))
 
         -- criação de botões e actions (CRIAR CLASSE PARA GERAR)
-        --salvando estado
+        -- salvando estado
         if suit.Button("Sair", 50, 10, 100, 30).hit then
-            table.insert(data,tostring(p1.name))
-            table.insert(data,tostring(p1.happy))
-            table.insert(data,tostring(p1.energy))
-            table.insert(data,tostring(p1.health))
+            if not p1:isdead() then
+                table.insert(data, tostring(p1.name))
+                table.insert(data, tostring(p1.happy))
+                table.insert(data, tostring(p1.energy))
+                table.insert(data, tostring(p1.health))
+                table.insert(data, tostring(p1.hunger))
 
-            for i = 1 , #data do
-                love.filesystem.append('save.lua', data[i])
+                for i = 1, #data do
+                    love.filesystem.append('save.lua', data[i])
+                    love.filesystem.append('save.lua', "\n")
+                end
+            end
+            for i = 1, #dead do
+                love.filesystem.append('save.lua', dead[i])
                 love.filesystem.append('save.lua', "\n")
             end
             love.event.quit(0)
+            
         end
 
         if suit.Button("Alimentar", 50, 50, 80, 80).hit then
+            if p1:isdead() then return end
             p1:toFeed()
             bHunger2:upScale((p1.hunger / 1000))
             bEnergy2:upScale((p1.energy / 1000))
@@ -113,10 +127,9 @@ function Game:update(dt)
         end
 
         if suit.Button("Brincar", 150, 50, 80, 80).hit then
+            if p1:isdead() then return end
             if p1.energy > 10 then
-                if sound == true then
-                    src4:stop()
-                end
+                if sound == true then src4:stop() end
                 p1:toPlay()
                 bHappy2:upScale((p1.happy / 1000))
                 bEnergy2:upScale((p1.energy / 1000))

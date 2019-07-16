@@ -27,7 +27,7 @@ function Game:new()
     -- minigami 
     -- som
     src4 = love.audio.newSource("sounds/ambient.wav", "static")
-
+    src10 = love.audio.newSource("sounds/diedie.wav","static")
     background = love.graphics.newImage("graphics/bg.png")
     love.graphics.setDefaultFilter('nearest', 'nearest')
     -- imagens 
@@ -82,7 +82,11 @@ end
 
 function Game:update(dt)
     -- morreu
-    if p1:isdead() then ssV:animate("charizardM") end
+    if p1:isdead() then 
+        ssV:animate("charizardM")
+        src4:stop()
+        src10:play() 
+    end
     -- desce status
     p1:degree()
     if dt > 0.035 then return end

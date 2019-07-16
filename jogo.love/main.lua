@@ -58,12 +58,11 @@ end
 function love.update(dt)
    -- Put a button on the screen. If hit, show a message.
     if Menu == true then
-        if suit.Button("Start Game", 100,100, 300,30).hit then setOther(1) 
+        if suit.Button("Start Game", 250,100, 300,30).hit then setOther(1) 
             game = g()
             game:update(dt)
         end
-        if suit.Button("Load", 100,140, 300,30).hit then setOther(2) end
-        if suit.Button("Sound", 100,180, 300,30).hit then 
+        if suit.Button("Sound", 250,140, 300,30).hit then 
             --.checkStateChanged
             if(sound == true) then
                 sound = false
@@ -77,7 +76,7 @@ function love.update(dt)
             end 
             --chk = {text = "Disable Sound?"}
         end
-        if suit.Button("Quit", 100,220, 300,30).hit then setOther(4) end
+        if suit.Button("Quit", 250,180, 300,30).hit then setOther(4) end
 
     else
         game:update(dt)

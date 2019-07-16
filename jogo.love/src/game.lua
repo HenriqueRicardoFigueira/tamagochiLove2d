@@ -84,8 +84,10 @@ function Game:update(dt)
     -- morreu
     if p1:isdead() then 
         ssV:animate("charizardM")
-        src4:stop()
-        src10:play() 
+        if sound == true then
+            src4:stop()
+            src10:play()
+        end 
     end
     -- desce status
     p1:degree()

@@ -4,10 +4,11 @@ require("MG/util")
 local Chzrd = {}
 Chzrd.__index = Chzrd
 local image_charV = love.graphics.newImage("MG/graphics/5d.png")
+
 function newChzrd(numChzrd, rChar)
   
   local a = {}
-  
+  --src3 = love.audio.newSource("sounds/acertou.wav", "static")
   a.numChzrd = numChzrd
   a.rChar = rChar
   a.chzrd = nil
@@ -47,6 +48,8 @@ function Chzrd:checkClickChzrd(x, y)
     if (checkMousePosIn(x, y, self.chzrd[index]:getX(), self.chzrd[index]:getY(), 
         self.rChar) == true) then
       self.initBall(self, index)
+      --src3:play()
+      --src3:stop() 
       points = points + 1
     end
   end

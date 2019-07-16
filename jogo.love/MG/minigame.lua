@@ -11,11 +11,20 @@ local Minigame = class:derive("Minigame")
 local suito = require ('suit')
 
 function Minigame:new()
+  src3 = love.audio.newSource("sounds/acertou.wav", "static")
   --red = 100/255
   --green = 252/255
   --blue = 180/255
   --alpha = 80/100
   --suito.reinit()
+  src1 = love.audio.newSource("sounds/minigame.wav", "static")
+ 
+  src1:setVolume(0.9) -- 90% of ordinary volume
+  src1:setPitch(0.5) -- one octave lower
+  src3:setVolume(0.9) -- 90% of ordinary volume
+  src3:setPitch(0.5)
+
+  --soundData = love.sound.newSoundData("sounds/minigame.wav", 'static')
   background = love.graphics.newImage("MG/graphics/fundo.png")
   width = background:getWidth()
   height = background:getHeight()
@@ -29,12 +38,12 @@ function Minigame:new()
 end
 
 function Minigame:update()
- 
   x , y = love.mouse.getPosition( )
   Minigame:mousepressed(x, y, button, istouch)
   lose = chzrd:updateChzrd()
-
+  src1:play()
   if suito.Button("Sair", 50,50, 100,30).hit then 
+    src1:stop()
     Gaming = false 
     
 
@@ -44,6 +53,7 @@ end
 
 function Minigame:mousepressed(x, y, button, istouch)
   points = points + chzrd:checkClickChzrd(x, y, points, nextLevel)
+  src3:play()
   
     if (points == nextLevel) then
       chzrd:IncNumChzrd()
@@ -55,6 +65,7 @@ function Minigame:mousepressed(x, y, button, istouch)
     lose = false
     points = 0
   end
+  src3:stop()
 end
 
 
@@ -70,7 +81,10 @@ function Minigame:draw()
   if (lose == false) then
     chzrd:drawChzrd()
   else
+
+    
     love.graphics.print("FIM DE JOGO", 350, 300)
+ 
   end
   
   suito.draw()

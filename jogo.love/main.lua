@@ -36,7 +36,7 @@ function setOther(cond)
         Settings = false --cond3
         Menu = true --TRUE
         miniG = false -- cond5
-        backgroundo = love.graphics.newImage("MG/graphics/fundo.png")
+        backgroundo = love.graphics.newImage("graphics/bg.png")
     elseif cond == 5 then
         Start = false --cond1
         Load = false --cond2
@@ -52,7 +52,7 @@ function love.load()
     
     --menu:load()
     background = love.graphics.newImage("graphics/bg.png")
-    backgroundo = love.graphics.newImage("MG/graphics/fundo.png")
+    backgroundo = love.graphics.newImage("graphics/bg.png")
 end
 
 function love.update(dt)
